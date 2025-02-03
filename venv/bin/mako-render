@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/rodrigoolivera/Desktop/Proyecto Bot telegram/venv/bin/python3" "$0" "$@"
+'''exec' "/Users/maximilianoolivera/Documents/Proyectos trabajados/BotPredicciones/botTelegram/venv/bin/python3.13" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

@@ -17,6 +17,7 @@ from sklearn.metrics import mean_squared_error
 from sklearn.linear_model import LogisticRegression
 import joblib
 from sklearn.metrics import accuracy_score
+from leagues.utils import get_famous_matches, get_info_last_5_match
 
 API_TOKEN = '7888643022:AAE8QsTx3I-7xXTGYVYHKeFQg84ycQ_65JA'
 
@@ -51,7 +52,7 @@ def home():
 
 
 @app.route("/predict", methods=["POST"])
-def predict():
+def predictCoso():
 
     data = pd.DataFrame({
         "goles_prom": [1.8, 1.2, 2.0, 0.9, 1.5, 2.2, 1.1, 1.4, 1.9, 0.8],
@@ -99,6 +100,20 @@ def predict():
     prediction = model.predict(X_new)[0]
 
     return jsonify({"predicción": int(prediction)})
+
+@app.route("/famous_matches", methods=["GET"])
+def famous_matches():
+    date_str = request.args.get("date")
+    matches = get_famous_matches(date_str)
+
+    return matches
+
+
+@app.route("/get_last_5_matches", methods=["GET"])
+def last_five_matches():
+    matches = get_info_last_5_match()
+
+    return matches
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000, host='0.0.0.0')
