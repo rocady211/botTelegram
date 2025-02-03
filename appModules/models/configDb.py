@@ -35,13 +35,15 @@ class User(db.Model):
     correo = db.Column(db.String(100), nullable = False)
     contraseña = db.Column(db.String(500), nullable = False)
     createdAt = db.Column(db.Date(), default = datetime.now())
+    timeZone = db.Column(db.String(50), default = "America/Montevideo")
 
-    def __init__(self,nombre,photo, correo, contraseña, createdAt):
+    def __init__(self,nombre,photo, correo, contraseña, createdAt, timeZone):
         self.nombre = nombre
         self.photo = photo
         self.correo = correo
         self.contraseña = contraseña
         self.createdAt = createdAt
+        self.timeZone = timeZone if timeZone else "America/Montevideo" 
 
     def serialize(self):
         return {
@@ -51,6 +53,7 @@ class User(db.Model):
         "correo":self.correo ,
         "contraseña":self.contraseña ,
         "createdAt":self.createdAt ,
+        "timeZone": self.timeZone
         }
 
 class ResultadoEnum(Enum):
