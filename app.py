@@ -190,11 +190,5 @@ def famous_matches_statics():
 
     return matches
 
-@app.route("/get_last_5_matches", methods=["GET"])
-def last_five_matches():
-    matches = get_info_last_5_match()
-
-    return matches
-
 if __name__ == '__main__':
     app.run(debug=True, port=8000, host='0.0.0.0')
