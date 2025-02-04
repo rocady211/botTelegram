@@ -21,7 +21,7 @@ from sklearn.metrics import mean_squared_error
 from sklearn.linear_model import LogisticRegression
 import joblib
 from sklearn.metrics import accuracy_score
-from leagues.utils import get_famous_matches, get_info_last_5_match
+from leagues.utils import get_famous_matches, get_info_last_5_match, get_famous_matches_with_statistics
 from flask_jwt_extended import JWTManager
 
 API_TOKEN = '7888643022:AAE8QsTx3I-7xXTGYVYHKeFQg84ycQ_65JA'
@@ -42,10 +42,11 @@ scheduler = APScheduler()
 
 bot = telebot.TeleBot(API_TOKEN)
 
-webhook_url = 'https://9740-2800-a4-c0e2-1c00-c51-51f2-666d-6062.ngrok-free.app/webhook'  
+webhook_url = 'https://9740-2800-a4-c0e2-1c00-c51-51f2-666d-6062.ngrok-free.app/webhook'
 
 bot.remove_webhook() 
-time.sleep(1)  # Espera 1 segundo antes de volver a intentar
+
+time.sleep(2)  
 bot.set_webhook(url=webhook_url) 
 
 auth = auth_bluePrint()
@@ -182,6 +183,12 @@ def famous_matches():
 
     return matches
 
+@app.route("/famous_matches_with_statics", methods=["GET"])
+def famous_matches_statics():
+    date_str = request.args.get("date")
+    matches = get_famous_matches_with_statistics(date_str)
+
+    return matches
 
 @app.route("/get_last_5_matches", methods=["GET"])
 def last_five_matches():
