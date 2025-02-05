@@ -23,7 +23,7 @@ import joblib
 from sklearn.metrics import accuracy_score
 from leagues.utils import get_famous_matches, get_info_last_5_match, get_famous_matches_with_statistics
 from flask_jwt_extended import JWTManager
-
+from leagues.getRandomGames import getRandomsGames
 API_TOKEN = '7888643022:AAE8QsTx3I-7xXTGYVYHKeFQg84ycQ_65JA'
 
 app = Flask(__name__)  
@@ -46,7 +46,7 @@ webhook_url = 'https://9740-2800-a4-c0e2-1c00-c51-51f2-666d-6062.ngrok-free.app/
 
 bot.remove_webhook() 
 
-time.sleep(2)  
+time.sleep(1)  
 bot.set_webhook(url=webhook_url) 
 
 auth = auth_bluePrint()
@@ -179,9 +179,12 @@ def predictCoso():
 @app.route("/famous_matches", methods=["GET"])
 def famous_matches():
     date_str = request.args.get("date")
-    matches = get_famous_matches(date_str)
-
-    return matches
+    matches_response = get_famous_matches(date_str)  
+    matches = matches_response.get_json() 
+    print('los matchs son', matches)
+    
+    random_games = getRandomsGames(2, matches) 
+    return jsonify(random_games) 
 
 @app.route("/famous_matches_with_statics", methods=["GET"])
 def famous_matches_statics():

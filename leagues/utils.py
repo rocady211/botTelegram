@@ -5,7 +5,7 @@ from datetime import datetime
 import time
 from functools import lru_cache
 
-API_KEY = "Ck8dvvPPs2uLp9ZMUxfmkAEKk0z7vQ3FSBFrUAEY"
+API_KEY = "U6IOhB1gYGRidX6m14WHx4Mzu9pQHIBQas4nWYQs"
 BASE_URL = "https://api.sportradar.com/soccer/trial/v4/en"
 
 ligas_famosas = {
@@ -133,9 +133,9 @@ def get_famous_matches(today):
     important_matches = {}
 
     for liga_name, liga_data in ligas_famosas.items():
+        time.sleep(1)  
         competition_id = liga_data["id"]
-        famous_teams = set(liga_data["famous_teams"])
-
+        famous_teams = set(liga_data["famous_teams"])        
         season_id = get_current_season(competition_id)
         if not season_id:
             continue
@@ -170,7 +170,7 @@ def get_famous_matches(today):
                 }
                 for match in matches
             ]
-            time.sleep(3)
+            time.sleep(3) 
         except requests.exceptions.RequestException as e:
             print(f"Error obteniendo partidos para {liga_name}: {e}")
 
